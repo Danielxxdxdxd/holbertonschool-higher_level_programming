@@ -1,4 +1,5 @@
 #!/usr/bin/python3
-for i in range(97, 123):
-    if i != 101 and i != 113:
-        print(f"{i:c}", end='')
+for alpha_letters in range(97, 123):
+    if alpha_letters in [101, 113]:
+        continue
+    print("{}".format(chr(alpha_letters)), end="")
