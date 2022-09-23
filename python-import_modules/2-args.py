@@ -1,12 +1,17 @@
 #!/usr/bin/python3
+from sys import argv
 
-if __name__ == '__main__':
-    from calculator_1 import add, sub, mul, div
 
-    a = 10
-    b = 5
+def run():
+    if len(argv) == 1:
+        print("0 arguments.")
+    elif len(argv) == 2:
+        print("1 argument:\n1: {}".format(argv[1]))
+    elif len(argv) > 2:
+        print("{} arguments:".format(len(argv) - 1))
+        for indx in range(1, len(argv)):
+            print("{}: {}".format(indx, argv[indx]))
 
-    print(f"{a} + {b} = {add(a, b)}")
-    print(f"{a} - {b} = {sub(a, b)}")
-    print(f"{a} * {b} = {mul(a, b)}")
-    print(f"{a} / {b} = {div(a, b)}")
+
+if __name__ == "__main__":
+    run()
