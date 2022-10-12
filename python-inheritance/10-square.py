@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-
-"""This module creates a named square"""
-
+"""
+Module Square class with
+inherits Rectangle
+"""
 Rectangle = __import__('9-rectangle').Rectangle
 
 
 class Square(Rectangle):
-    """An class named BaseGeometry
-    Attributes:
-    attr1(area): Raises an exception
-    """
+    """Initization Rectangle"""
 
     def __init__(self, size):
-        """Initializes an instance"""
-        self.integer_validator("size", size)
+        """
+        Size is a private instance
+        Validation size must be
+        positive integers
+        """
+        Rectangle.integer_validator(self, "size", size)
         self.__size = size
         super().__init__(size, size)
