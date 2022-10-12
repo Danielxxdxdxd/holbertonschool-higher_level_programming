@@ -1,27 +1,34 @@
 #!/usr/bin/python3
-
-"""Module to create an empty class"""
+"""
+Module Ractangle class with
+inherits BaseGeometry
+"""
 BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
 
 class Rectangle(BaseGeometry):
-    """An class named BaseGeometry
-    Attributes:
-    attr1(width): Width of rectangle
-    attr2(height): height of rectangle
-    """
+    """Initization Rectangle"""
 
     def __init__(self, width, height):
-        """initializes an instance"""
-        self.integer_validator("width", width)
-        self.integer_validator("height", height)
+        """
+        width and height is a private instance
+        Validation width and height must be
+        positive integers
+        """
+        BaseGeometry.integer_validator(self, "width", width)
+        BaseGeometry.integer_validator(self, "height", height)
         self.__width = width
         self.__height = height
 
     def area(self):
-        """returns area of instance"""
-        return self.__width * self.__height
+        """
+        Return area for a rectangle
+        """
+        return self.__height * self.__width
 
     def __str__(self):
-        """return area representation"""
-        return f"[Rectangle] {self.__width}/{self.__height}"
+        """
+        Returns size for a Rectangle with a message
+        """
+        size_msg = ("[Rectangle] {}/{}".format(self.__width, self.__height))
+        return (size_msg)
