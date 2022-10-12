@@ -1,21 +1,21 @@
 #!/usr/bin/python3
-"""Module to create an empty class"""
+"""
+Module Ractangle class with
+inherits BaseGemetry
+"""
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
 
-class BaseGeometry():
-    """An class named BaseGeometry
-    Attributes:
-    attr1(area): Raises an exception
-    """
+class Rectangle(BaseGeometry):
+    """Initization Rectangle"""
 
-    def area(self):
-        """raises an exception"""
-        raise Exception("area() is not implemented")
-
-    def integer_validator(self, name, value):
-        """validates input"""
-        if not isinstance(value, int):
-            raise TypeError(f"{value} must be an integer")
-
-        if value <= 0:
-            raise ValueError(f"{value} must be greater than 0")
+    def __init__(self, width, height):
+        """
+        Width and height is a private instance
+        Validation width and height must be
+        positive integers
+        """
+        BaseGeometry.integer_validator(self, "width", width)
+        BaseGeometry.integer_validator(self, "height", height)
+        self.__width = width
+        self.__height = height
