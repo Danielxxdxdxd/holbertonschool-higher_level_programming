@@ -1,24 +1,30 @@
 #!/usr/bin/python3
-""" script that lists all states from the database hbtn_0e_0_usa: """
+"""Conect the database"""
+import sys
+import MySQLdb
+
+
+def mysqlconnect():
+    db_connection = None
+    db_connection = MySQLdb.connect(
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        host="localhost",
+        port=3306
+    )
+
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT cities.name FROM cities\
+    JOIN states ON cities.state_id = states.id\
+    WHERE states.name = %(state)s ORDER BY cities.id", {"state": sys.argv[4]})
+    cities = cursor.fetchall()
+
+    print(", ".join(city[0] for city in cities))
+
+    cursor.close()
+    db_connection.close()
+
 
 if __name__ == '__main__':
-    """ Module to select states"""
-
-    import MySQLdb
-    import sys
-
-    db = MySQLdb.connect(
-        host='localhost', user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    mycursor = db.cursor()
-    st = sys.argv[4].split('\'')
-    mycursor.execute("SELECT cities.name \
-FROM cities JOIN states ON cities.state_id = states.id \
-WHERE states.name = '{}' \
-ORDER BY cities.id ASC".format(st[0]))
-    myresult = mycursor.fetchall()
-    for x in range(0, len(myresult)):
-        if x < (len(myresult) - 1):
-            print(myresult[x][0], end=", ")
-        else:
-            print(myresult[x][0], end="")
-    print()
+    mysqlconnect()
