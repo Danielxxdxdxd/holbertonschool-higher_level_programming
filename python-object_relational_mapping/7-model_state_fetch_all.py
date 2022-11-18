@@ -1,21 +1,28 @@
 #!/usr/bin/python3
-"""Conect the database"""
-import sys
-import MySQLdb
-from sqlalchemy.orm import Session
+"""lists all State objects from the database hbtn_0e_6_usa"""
+
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from model_state import Base, State
 from sqlalchemy import (create_engine)
-from model_state import Base
-from model_state import State
+from sqlalchemy.orm import sessionmaker
+import sys
 
 
-def mysqlconnect():
-    engine = create_engine(f"mysql+mysqldb://{sys.argv[1]}:\
-        {sys.argv[2]}@localhost/{sys.argv[3]}")
-    with Session(bind=engine) as session:
-        x = session.query(State).all()
-        for indx in x:
-            print(f"{indx.id}: {indx.name}")
+if __name__ == "__main__":
 
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
+        sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
 
-if __name__ == '__main__':
-    mysqlconnect()
+    Base.metadata.create_all(engine)
+
+    connection = engine.connect()
+
+    Session = sessionmaker(engine)
+
+    session = Session()
+
+    results = session.query(State).order_by(State.id)
+
+    for states in results:
+        print("{}: {}".format(states.id, states.name))
