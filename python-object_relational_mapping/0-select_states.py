@@ -1,39 +1,30 @@
 #!/usr/bin/python3
-"""lists all states from the database hbtn_0e_0_usa"""
-
+"""
+This module conect to the sql with python,
+open the hbtn databases and print all elemts
+"""
 import MySQLdb
 from sys import argv
 
-if __name__ == '__main__':
 
-    """
-    Create a connection to the database
-    arguments:
-        1. server name
-        2. database user name
-        3. database password
-        4. database name
-    """
-    data_base = MySQLdb.connect(host='localhost', user=argv[1],
-                                password=argv[2], database=argv[3])
+def date():
+    """This funtion connect to the basedata"""
+    db = MySQLdb.connect(
+        host="localhost",
+        user=argv[1],
+        password=argv[2],
+        database=argv[3],
+        port=3306
+    )
 
-    """
-    Creates a cursor that is capable of
-    executing SQL queries on the database
-    """
-    cursor = data_base.cursor()
+    cur = db.cursor()
 
-    """
-    Executing SQL queries on the database
-    Takes a SQL query as a string, as an argument
-    """
-    cursor.execute('SELECT * FROM states')
+    cur.execute("SELECT * FROM states ORDER BY id ASC")
+    for elemets in cur:
+        print(elemets)
 
-    """
-    Fetch (extraer) the rows of the table and store them in a variable
-    The data is store as a Tuple of tuples
-    """
-    data_rows = cursor.fetchall()
+    db.close()
 
-    for data in data_rows:
-        print(data)
+
+if __name__ == "__main__":
+    date()
